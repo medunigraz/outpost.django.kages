@@ -17,8 +17,9 @@ class TranslateViewSet(viewsets.ViewSet):
         return Response()
 
     def retrieve(self, request, pk=None):
+        response = Response({"exists": False})
         if not pk:
-            return Response(False)
+            return response
         try:
             conn = ldap.initialize(settings.AUTH_LDAP_SERVER_URI)
             conn.simple_bind_s(
@@ -31,8 +32,11 @@ class TranslateViewSet(viewsets.ViewSet):
                 settings.KAGES_PERS_FIELDS,
             )
             found = len(result) == 1
+            response.data.update({"exists": found})
+            if found:
+                dn, data = result.pop()
+                response.data.update({k: v.pop() for k, v in data.items()})
         except Exception as e:
             logger.warn(f"LDAP query failed when matching KAGes ID: {e}")
-            found = False
         logger.debug(f"Matched KAGes ID: {found}")
-        return Response({"exists": found})
+        return response
