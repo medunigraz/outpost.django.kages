@@ -28,7 +28,7 @@ class TranslateViewSet(viewsets.ViewSet):
             result = conn.search_s(
                 settings.AUTH_LDAP_USER_SEARCH.base_dn,
                 settings.AUTH_LDAP_USER_SEARCH.scope,
-                settings.KAGES_PERS_ID_FILTER.format(id=int(pk)),
+                settings.KAGES_PERS_ID_FILTER.format(id=str(pk).zfill(8)),
                 settings.KAGES_PERS_FIELDS,
             )
             found = len(result) == 1
