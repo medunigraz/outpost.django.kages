@@ -1,7 +1,11 @@
 import logging
 
 import ldap
-from rest_framework import exceptions, permissions, viewsets
+from rest_framework import (
+    exceptions,
+    permissions,
+    viewsets,
+)
 from rest_framework.response import Response
 
 from . import models
