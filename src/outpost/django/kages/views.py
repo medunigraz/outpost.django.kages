@@ -27,12 +27,16 @@ def create_news(news):
         },
         "InhaltstypID": settings.KAGES_NEWS_CONTENTTYPE_ID,
         "Titel": news.title,
-        "StartDate": "/Date({d})/".format(d=int(news.start.timestamp() * 1000))
-        if news.start
-        else None,
-        "EndDate": "/Date({d})/".format(d=int(news.end.timestamp() * 1000))
-        if news.end
-        else None,
+        "StartDate": (
+            "/Date({d})/".format(d=int(news.start.timestamp() * 1000))
+            if news.start
+            else None
+        ),
+        "EndDate": (
+            "/Date({d})/".format(d=int(news.end.timestamp() * 1000))
+            if news.end
+            else None
+        ),
         "ShortDescription": news.teaser,
         "ShowInArchive": True,
         "Link": news.url(),
@@ -44,9 +48,9 @@ def create_news(news):
                 "data": {
                     "Beitragsdatum": news.datetime.isoformat(),
                     "GeplantesEndedatum": news.end.isoformat() if news.end else None,
-                    "GeplantesStartdatum": news.start.isoformat()
-                    if news.start
-                    else None,
+                    "GeplantesStartdatum": (
+                        news.start.isoformat() if news.start else None
+                    ),
                     "Inhaltstyp": "Med Uni News",
                     "Optionen": None,
                     "Redaktionen": None,
@@ -62,21 +66,25 @@ def create_news(news):
         "Description": news.description,
         "MedOnlineId": news.pk,
         "NewsCategory": ", ".join([c.title for c in news.categories.all()]),
-        "LastModified": "/Date({d})/".format(
-            d=int(news.last_modified.timestamp() * 1000)
-        )
-        if news.end
-        else None,
+        "LastModified": (
+            "/Date({d})/".format(d=int(news.last_modified.timestamp() * 1000))
+            if news.end
+            else None
+        ),
         "IsSpecial": news.topnews,
         "Published": True,
         "ID": news.pk,
         "Inhaltstyp": "News",
-        "Geändert": "/Date({d})/".format(d=int(news.datetime.timestamp() * 1000))
-        if news.datetime
-        else None,
-        "Erstellt": "/Date({d})/".format(d=int(news.datetime.timestamp() * 1000))
-        if news.datetime
-        else None,
+        "Geändert": (
+            "/Date({d})/".format(d=int(news.datetime.timestamp() * 1000))
+            if news.datetime
+            else None
+        ),
+        "Erstellt": (
+            "/Date({d})/".format(d=int(news.datetime.timestamp() * 1000))
+            if news.datetime
+            else None
+        ),
         "ErstelltVon": news.author,
         "GeändertVon": news.author,
         "Pfad": "/Lists/News",
