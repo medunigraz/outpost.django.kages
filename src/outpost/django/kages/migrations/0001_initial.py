@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("typo3", "0008_auto_20230919_1113"),
+        ("typo3", "0001_initial"),
     ]
 
     operations = [
